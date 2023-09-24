@@ -16,6 +16,8 @@ package main
 import (
 	"fmt"
 	"my_interfaces/internal/parcel"
+	"my_interfaces/internal/route"
+	"my_interfaces/internal/vehicle"
 )
 
 func main() {
@@ -54,5 +56,28 @@ func main() {
 	parcel.SendParcelTo(&envelope)
 	parcel.SendParcelTo(&box)
 
-	fmt.Print("\n\n2.===================\n\n")
+	fmt.Print("2.===================\n\n")
+
+	car := vehicle.Car{
+		Vehicle: vehicle.Vehicle{
+			Name:  "Car",
+			Speed: 0,
+		},
+		Brand: "BMW",
+	}
+
+	route := route.Route{
+		Name: "Kyiv - Warsaw",
+	}
+
+	car.ChangeSpeed(50)
+	car.Move()
+	car.Stop()
+	car.Move()
+
+	car.TakePassenger(4)
+	car.DropPassenger(1)
+
+	route.AddVehicle(&car)
+	route.PrintVehicles()
 }
