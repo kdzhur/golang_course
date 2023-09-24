@@ -66,6 +66,20 @@ func main() {
 		Brand: "BMW",
 	}
 
+	train := vehicle.Train{
+		Vehicle: vehicle.Vehicle{
+			Name:  "Train",
+			Speed: 0,
+		},
+	}
+
+	airplane := vehicle.Train{
+		Vehicle: vehicle.Vehicle{
+			Name:  "Airplane",
+			Speed: 0,
+		},
+	}
+
 	route := route.Route{
 		Name: "Kyiv - Warsaw",
 	}
@@ -79,5 +93,7 @@ func main() {
 	car.DropPassenger(1)
 
 	route.AddVehicle(&car)
+	route.AddVehicle(&train)
+	route.AddVehicle(&airplane)
 	route.PrintVehicles()
 }
