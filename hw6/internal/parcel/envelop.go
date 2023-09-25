@@ -2,6 +2,10 @@ package parcel
 
 import "fmt"
 
+type Envelope struct {
+	Parcel
+}
+
 func (e *Envelope) SortParcel() string {
 	e.sorting = &sorting{
 		name: "Mailbox",

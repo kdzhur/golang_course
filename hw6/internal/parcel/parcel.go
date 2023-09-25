@@ -2,6 +2,17 @@ package parcel
 
 import "fmt"
 
+type Parcel struct {
+	Name      string
+	Sender    *Sender
+	Recipient *Recipient
+	sorting   *sorting
+}
+
+type sorting struct {
+	name string
+}
+
 type ParcelSorter interface {
 	SortParcel() string
 }

@@ -2,6 +2,10 @@ package parcel
 
 import "fmt"
 
+type Box struct {
+	Parcel
+}
+
 func (b *Box) SortParcel() string {
 	b.sorting = &sorting{
 		name: "Stock",
