@@ -16,7 +16,7 @@ func main() {
 	<-doneChan
 }
 
-func numbersGenerator(ch chan int, result chan [2]int, done chan bool) {
+func numbersGenerator(ch chan<- int, result <-chan [2]int, done chan<- bool) {
 
 	for i := 0; i < 7; i++ {
 		num := rand.Intn(100) + 1
