@@ -25,7 +25,7 @@ func RandomQueryGenerator(s *store.Store, respch chan<- *product.Product) {
 	close(respch)
 }
 
-func PrepareBill(respch <-chan *product.Product, resultch chan<- *Bill, ctx context.Context) {
+func PrepareBill(respch <-chan *product.Product, resultch chan<- *Bill, ctx *context.Context) {
 
 	var total float64
 	var products []*product.Product
@@ -46,7 +46,7 @@ func PrepareBill(respch <-chan *product.Product, resultch chan<- *Bill, ctx cont
 				close(resultch)
 				return
 			}
-		case <-ctx.Done():
+		case <-(*ctx).Done():
 			resultch <- &Bill{
 				Items:      products,
 				TotalPrice: total,

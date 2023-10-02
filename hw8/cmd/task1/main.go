@@ -8,12 +8,8 @@ package main
 
 import (
 	"concurrency2/cmd/task1/internal/client"
-	"concurrency2/cmd/task1/internal/product"
 	"concurrency2/cmd/task1/internal/store"
-	"context"
 	"flag"
-	"fmt"
-	"log"
 	"time"
 )
 
@@ -23,30 +19,13 @@ func main() {
 
 	flag.Parse()
 
-	respch := make(chan *product.Product)
-	resultch := make(chan *client.Bill)
-
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Millisecond*time.Duration(*timeoutFlag)))
-	defer cancel()
-
 	rozetka := store.NewStore("Rozetka")
-
 	rozetka.FillStore("assets/store.json")
+
+	client := client.NewStoreClient(time.Duration(*timeoutFlag))
+
+	client.HandleClient(rozetka)
 
 	// rozetka.ShowStore()
 
-	go client.RandomQueryGenerator(rozetka, respch)
-	go client.PrepareBill(respch, resultch, ctx)
-
-	for r := range resultch {
-		for _, item := range r.Items {
-			fmt.Printf("=====Item=====\nName: %v\nModel: %v\nManufacturer: %v\n Price: %v\n", item.Name, item.Model, item.Manufacturer, item.Price)
-		}
-		fmt.Printf("==============\n")
-		fmt.Printf("Total price: %.2f\n", r.TotalPrice)
-	}
-
-	if err := ctx.Err(); err != nil {
-		log.Fatalln(err, ":", "failed by", *timeoutFlag, "ms timeout")
-	}
 }
