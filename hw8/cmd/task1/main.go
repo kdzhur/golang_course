@@ -10,13 +10,18 @@ import (
 	"concurrency2/cmd/task1/internal/client"
 	"concurrency2/cmd/task1/internal/product"
 	"concurrency2/cmd/task1/internal/store"
+	"context"
 	"fmt"
+	"time"
 )
 
 func main() {
 
 	respch := make(chan *product.Product)
 	resultch := make(chan *client.Bill)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Millisecond*500))
+	defer cancel()
 
 	rozetka := store.NewStore("Rozetka")
 
@@ -25,7 +30,7 @@ func main() {
 	// rozetka.ShowStore()
 
 	go client.RandomQueryGenerator(rozetka, respch)
-	go client.PrepareBill(respch, resultch)
+	go client.PrepareBill(respch, resultch, ctx)
 
 	for r := range resultch {
 		for _, item := range r.Items {
