@@ -1,0 +1,368 @@
+[
+    {
+        "name": "Smartphone",
+        "model": "iPhone 13",
+        "manufacturer": "Apple",
+        "price": 799.99
+    },
+    {
+        "name": "Laptop",
+        "model": "XPS 13",
+        "manufacturer": "Dell",
+        "price": 1299.99
+    },
+    {
+        "name": "Refrigerator",
+        "model": "French Door RF28R7201SR",
+        "manufacturer": "Samsung",
+        "price": 1699.00
+    },
+    {
+        "name": "Television",
+        "model": "Bravia X900H",
+        "manufacturer": "Sony",
+        "price": 1099.99
+    },
+    {
+        "name": "Washing Machine",
+        "model": "WM4500HBA",
+        "manufacturer": "LG",
+        "price": 899.00
+    },
+    {
+        "name": "Coffee Maker",
+        "model": "K-Elite",
+        "manufacturer": "Keurig",
+        "price": 129.99
+    },
+    {
+        "name": "Toaster",
+        "model": "CPT-180P1",
+        "manufacturer": "Cuisinart",
+        "price": 49.95
+    },
+    {
+        "name": "Blender",
+        "model": "5200 Series",
+        "manufacturer": "Vitamix",
+        "price": 399.00
+    },
+    {
+        "name": "Vacuum Cleaner",
+        "model": "V11 Animal",
+        "manufacturer": "Dyson",
+        "price": 599.99
+    },
+    {
+        "name": "Microwave Oven",
+        "model": "NN-SN966S",
+        "manufacturer": "Panasonic",
+        "price": 149.95
+    },
+    {
+        "name": "Digital Camera",
+        "model": "EOS 5D Mark IV",
+        "manufacturer": "Canon",
+        "price": 2499.00
+    },
+    {
+        "name": "Air Conditioner",
+        "model": "MSZ-FH12NA",
+        "manufacturer": "Mitsubishi Electric",
+        "price": 999.00
+    },
+    {
+        "name": "Smartwatch",
+        "model": "Versa 3",
+        "manufacturer": "Fitbit",
+        "price": 229.95
+    },
+    {
+        "name": "Electric Toothbrush",
+        "model": "Pro 1000",
+        "manufacturer": "Oral-B",
+        "price": 39.99
+    },
+    {
+        "name": "Hair Dryer",
+        "model": "Infiniti Pro",
+        "manufacturer": "Conair",
+        "price": 49.99
+    },
+    {
+        "name": "Gaming Console",
+        "model": "Xbox Series X",
+        "manufacturer": "Microsoft",
+        "price": 499.99
+    },
+    {
+        "name": "Tablet",
+        "model": "Galaxy Tab S7",
+        "manufacturer": "Samsung",
+        "price": 649.99
+    },
+    {
+        "name": "Desk Chair",
+        "model": "Aeron",
+        "manufacturer": "Herman Miller",
+        "price": 1395.00
+    },
+    {
+        "name": "Kitchen Mixer",
+        "model": "Artisan Series",
+        "manufacturer": "KitchenAid",
+        "price": 349.99
+    },
+    {
+        "name": "Toilet",
+        "model": "Cimarron",
+        "manufacturer": "Kohler",
+        "price": 299.00
+    },
+    {
+        "name": "Digital Thermometer",
+        "model": "IRT6520",
+        "manufacturer": "Braun",
+        "price": 34.99
+    },
+    {
+        "name": "Fitness Tracker",
+        "model": "Vivosmart 4",
+        "manufacturer": "Garmin",
+        "price": 129.99
+    },
+    {
+        "name": "Electric Shaver",
+        "model": "Norelco 9000",
+        "manufacturer": "Philips",
+        "price": 199.95
+    },
+    {
+        "name": "Cordless Phone",
+        "model": "KX-TG7875S",
+        "manufacturer": "Panasonic",
+        "price": 89.99
+    },
+    {
+        "name": "Gaming Mouse",
+        "model": "G502 Hero",
+        "manufacturer": "Logitech",
+        "price": 79.99
+    },
+    {
+        "name": "Coffeemaker",
+        "model": "Pixie",
+        "manufacturer": "Nespresso",
+        "price": 149.00
+    },
+    {
+        "name": "Air Purifier",
+        "model": "HPA300",
+        "manufacturer": "Honeywell",
+        "price": 249.99
+    },
+    {
+        "name": "Bluetooth Speaker",
+        "model": "Charge 4",
+        "manufacturer": "JBL",
+        "price": 139.95
+    },
+    {
+        "name": "Digital Watch",
+        "model": "G-Shock DW5600E-1V",
+        "manufacturer": "Casio",
+        "price": 59.99
+    },
+    {
+        "name": "Car Stereo",
+        "model": "AVH-2500NEX",
+        "manufacturer": "Pioneer",
+        "price": 299.00
+    },
+    {
+        "name": "Dishwasher",
+        "model": "SHXM78Z55N",
+        "manufacturer": "Bosch",
+        "price": 899.00
+    },
+    {
+        "name": "Gaming Headset",
+        "model": "Kraken X",
+        "manufacturer": "Razer",
+        "price": 49.99
+    },
+    {
+        "name": "Hair Straightener",
+        "model": "S5500",
+        "manufacturer": "Remington",
+        "price": 29.99
+    },
+    {
+        "name": "Drone",
+        "model": "Mavic Air 2",
+        "manufacturer": "DJI",
+        "price": 799.00
+    },
+    {
+        "name": "Water Heater",
+        "model": "Performance Platinum",
+        "manufacturer": "Rheem",
+        "price": 899.99
+    },
+    {
+        "name": "Food Processor",
+        "model": "DFP-14BCNY",
+        "manufacturer": "Cuisinart",
+        "price": 199.95
+    },
+    {
+        "name": "Electric Kettle",
+        "model": "40996",
+        "manufacturer": "Hamilton Beach",
+        "price": 24.99
+    },
+    {
+        "name": "Electric Fan",
+        "model": "2265QM",
+        "manufacturer": "Lasko",
+        "price": 39.95
+    },
+    {
+        "name": "Bicycle",
+        "model": "FX 2 Disc",
+        "manufacturer": "Trek",
+        "price": 699.00
+    },
+    {
+        "name": "Power Bank",
+        "model": "PowerCore 20100",
+        "manufacturer": "Anker",
+        "price": 49.99
+    },
+    {
+        "name": "Smart Speaker",
+        "model": "Echo Dot (4th Gen)",
+        "manufacturer": "Amazon",
+        "price": 49.99
+    },
+    {
+        "name": "Router",
+        "model": "Nighthawk AX12",
+        "manufacturer": "Netgear",
+        "price": 299.99
+    },
+    {
+        "name": "Portable Hard Drive",
+        "model": "Backup Plus Slim",
+        "manufacturer": "Seagate",
+        "price": 79.99
+    },
+    {
+        "name": "Blu-ray Player",
+        "model": "BDP-S6700",
+        "manufacturer": "Sony",
+        "price": 99.99
+    },
+    {
+        "name": "Electric Scooter",
+        "model": "Ninebot MAX",
+        "manufacturer": "Segway",
+        "price": 799.00
+    },
+    {
+        "name": "Car Vacuum",
+        "model": "Black+Decker Flex",
+        "manufacturer": "Black+Decker",
+        "price": 59.95
+    },
+    {
+        "name": "Air Fryer",
+        "model": "Cosori CP158-AF",
+        "manufacturer": "Cosori",
+        "price": 119.99
+    },
+    {
+        "name": "E-reader",
+        "model": "Kindle Paperwhite",
+        "manufacturer": "Amazon",
+        "price": 129.99
+    },
+    {
+        "name": "Bluetooth Earbuds",
+        "model": "AirPods Pro",
+        "manufacturer": "Apple",
+        "price": 249.00
+    },
+    {
+        "name": "Soundbar",
+        "model": "Sonos Beam",
+        "manufacturer": "Sonos",
+        "price": 399.00
+    },
+    {
+        "name": "Cordless Drill",
+        "model": "Dewalt DCD771C2",
+        "manufacturer": "Dewalt",
+        "price": 99.00
+    },
+    {
+        "name": "Hair Curler",
+        "model": "BaBylissPRO Nano",
+        "manufacturer": "BaBylissPRO",
+        "price": 49.95
+    },
+    {
+        "name": "Bluetooth Headphones",
+        "model": "Bose QuietComfort 35 II",
+        "manufacturer": "Bose",
+        "price": 299.00
+    },
+    {
+        "name": "Rice Cooker",
+        "model": "Instant Pot Duo 60",
+        "manufacturer": "Instant Pot",
+        "price": 89.95
+    },
+    {
+        "name": "Electric Guitar",
+        "model": "Fender Stratocaster",
+        "manufacturer": "Fender",
+        "price": 699.99
+    },
+    {
+        "name": "Home Theater System",
+        "model": "Bose Lifestyle 650",
+        "manufacturer": "Bose",
+        "price": 3499.00
+    },
+    {
+        "name": "Dumbbell Set",
+        "model": "Bowflex SelectTech 552",
+        "manufacturer": "Bowflex",
+        "price": 299.00
+    },
+    {
+        "name": "Digital Scale",
+        "model": "Etekcity Digital Body Weight Scale",
+        "manufacturer": "Etekcity",
+        "price": 19.99
+    },
+    {
+        "name": "Air Mattress",
+        "model": "SoundAsleep Dream Series Air Mattress",
+        "manufacturer": "SoundAsleep",
+        "price": 149.95
+    },
+    {
+        "name": "Slow Cooker",
+        "model": "Crock-Pot SCCPVL610-S",
+        "manufacturer": "Crock-Pot",
+        "price": 49.99
+    },
+    {
+        "name": "Electric Scooter",
+        "model": "Xiaomi Mi M365",
+        "manufacturer": "Xiaomi",
+        "price": 399.00
+    }
+]
