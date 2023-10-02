@@ -11,16 +11,22 @@ import (
 	"concurrency2/cmd/task1/internal/product"
 	"concurrency2/cmd/task1/internal/store"
 	"context"
+	"flag"
 	"fmt"
+	"log"
 	"time"
 )
 
 func main() {
 
+	timeoutFlag := flag.Int("timeout", 500, "Set query timeout in ms. Defaults to 500ms")
+
+	flag.Parse()
+
 	respch := make(chan *product.Product)
 	resultch := make(chan *client.Bill)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Millisecond*500))
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Millisecond*time.Duration(*timeoutFlag)))
 	defer cancel()
 
 	rozetka := store.NewStore("Rozetka")
@@ -38,5 +44,9 @@ func main() {
 		}
 		fmt.Printf("==============\n")
 		fmt.Printf("Total price: %.2f\n", r.TotalPrice)
+	}
+
+	if err := ctx.Err(); err != nil {
+		log.Fatalln(err, ":", "failed by", *timeoutFlag, "ms timeout")
 	}
 }
