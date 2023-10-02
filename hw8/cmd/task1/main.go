@@ -24,9 +24,8 @@ func main() {
 
 	// rozetka.ShowStore()
 
-	client.RandomQueryGenerator(rozetka, respch)
-
-	client.PrepareBill(respch, resultch)
+	go client.RandomQueryGenerator(rozetka, respch)
+	go client.PrepareBill(respch, resultch)
 
 	for r := range resultch {
 		for _, item := range r.Items {

@@ -15,12 +15,10 @@ type Bill struct {
 func RandomQueryGenerator(s *store.Store, respch chan<- *product.Product) {
 	timesToQuery := rand.Intn(3) + 2
 
-	go func() {
-		for i := 0; i < timesToQuery; i++ {
-			respch <- s.Products[rand.Intn(len(s.Products))]
-		}
-		close(respch)
-	}()
+	for i := 0; i < timesToQuery; i++ {
+		respch <- s.Products[rand.Intn(len(s.Products))]
+	}
+	close(respch)
 
 	fmt.Printf("Client is making %d queries...\n", timesToQuery)
 }
@@ -30,16 +28,14 @@ func PrepareBill(respch <-chan *product.Product, resultch chan<- *Bill) {
 	var total float64
 	var products []*product.Product
 
-	go func() {
-		for value := range respch {
-			total += value.Price
-			products = append(products, value)
-		}
+	for value := range respch {
+		total += value.Price
+		products = append(products, value)
+	}
 
-		resultch <- &Bill{
-			Items:      products,
-			TotalPrice: total,
-		}
-		close(resultch)
-	}()
+	resultch <- &Bill{
+		Items:      products,
+		TotalPrice: total,
+	}
+	close(resultch)
 }
