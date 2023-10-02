@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"math/rand"
 )
 
@@ -29,8 +30,8 @@ func numbersGenerator(ch chan<- int, result <-chan [2]int, done chan<- bool) {
 }
 
 func findMinMax(ch <-chan int, result chan<- [2]int) {
-	min := 999999
-	max := -999999
+	min := math.MaxInt
+	max := math.MinInt
 
 	for num := range ch {
 		fmt.Println("Number: ", num)
