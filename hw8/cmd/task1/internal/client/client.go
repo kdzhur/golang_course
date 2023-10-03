@@ -12,26 +12,29 @@ import (
 type StoreClient struct {
 	Timeout time.Duration
 	Ctx     *context.Context
+
+	respch   chan *product.Product
+	resultch chan *Bill
 }
 
 func NewStoreClient(timeout time.Duration) *StoreClient {
 	return &StoreClient{
-		Timeout: timeout,
+		Timeout:  timeout,
+		respch:   make(chan *product.Product),
+		resultch: make(chan *Bill),
 	}
 }
 
 func (c *StoreClient) HandleClient(s *store.Store) {
-	respch := make(chan *product.Product)
-	resultch := make(chan *Bill)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Millisecond*c.Timeout))
 	defer cancel()
 	c.Ctx = &ctx
 
-	go RandomQueryGenerator(s, respch)
-	go PrepareBill(respch, resultch, c.Ctx)
+	go RandomQueryGenerator(s, c.respch)
+	go PrepareBill(c.respch, c.resultch, c.Ctx)
 
-	for r := range resultch {
+	for r := range c.resultch {
 		for _, item := range r.Items {
 			fmt.Printf("=====Item=====\nName: %v\nModel: %v\nManufacturer: %v\n Price: %v\n", item.Name, item.Model, item.Manufacturer, item.Price)
 		}
