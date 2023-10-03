@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"math/rand"
+	"sync"
 	"time"
 )
 
@@ -27,11 +29,24 @@ func NewStoreClient(timeout time.Duration) *StoreClient {
 
 func (c *StoreClient) HandleClient(s *store.Store) {
 
+	var wg sync.WaitGroup
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Millisecond*c.Timeout))
 	defer cancel()
-	c.ctx = &ctx
 
-	go RandomQueryGenerator(s, c.respch)
+	c.ctx = &ctx
+	timesToQuery := rand.Intn(3) + 2
+
+	fmt.Printf("Client is making %d queries...\n", timesToQuery)
+	for i := 0; i < timesToQuery; i++ {
+		wg.Add(1)
+		go RandomQueryGenerator(s, c.respch, &wg)
+	}
+
+	go func() {
+		wg.Wait()
+		close(c.respch)
+	}()
+
 	go PrepareBill(c.respch, c.resultch, c.ctx)
 
 	for r := range c.resultch {
@@ -43,6 +58,6 @@ func (c *StoreClient) HandleClient(s *store.Store) {
 	}
 
 	if err := (*c.ctx).Err(); err != nil {
-		log.Fatalln(err, ":", "failed by", c.Timeout, "ms timeout")
+		log.Fatalln(err, ":", "failed by", c.Timeout, "timeout")
 	}
 }
