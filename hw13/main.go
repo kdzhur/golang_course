@@ -26,7 +26,6 @@ func main() {
 	voteArea.ProcBallots(votes)
 	voteArea.ApplyBallots()
 
-	// fmt.Println(voteArea.Chain)
 	if voteArea.Chain.IsValid() {
 		fmt.Println("The Vote is valid!")
 	} else {
