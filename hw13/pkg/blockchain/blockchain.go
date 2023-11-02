@@ -23,7 +23,7 @@ type Blockchain struct {
 	difficulty   int
 }
 
-func (b Block) calculateHash() string {
+func (b *Block) calculateHash() string {
 	data, _ := json.Marshal(b.data)
 	blockData := b.previousHash + string(data) + b.timestamp.String() + strconv.Itoa(b.pow)
 	blockHash := sha256.Sum256([]byte(blockData))
@@ -65,7 +65,7 @@ func (b *Blockchain) AddBlock(voterName, candidateName string, candidateNumber i
 	b.chain = append(b.chain, newBlock)
 }
 
-func (b Blockchain) IsValid() bool {
+func (b *Blockchain) IsValid() bool {
 	for i := range b.chain[1:] {
 		previousBlock := b.chain[i]
 		currentBlock := b.chain[i+1]
