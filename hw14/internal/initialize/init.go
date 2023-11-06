@@ -19,6 +19,8 @@ func InitApp(fruits *models.Fruits, app *fiber.App) {
 }
 
 func InitRoutes(app *fiber.App) {
-	app.Get("/", controllers.ListAllFruits, controllers.GetFruit)
+	app.Get("/fruits", controllers.ListAllFruits, controllers.GetFruit)
 	app.Get("/fruit", controllers.GetFruit)
+	app.Post("/fruit", controllers.AddFruit)
+	app.Delete("/fruit/:name", controllers.DeleteFruit)
 }
