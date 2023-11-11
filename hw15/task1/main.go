@@ -11,42 +11,6 @@ import (
 )
 
 func main() {
-	// broker := &pubsub.Broker{
-	// 	Msg: make(chan pubsub.Message),
-	// }
-
-	// broker.Accept()
-
-	// consumer1 := &pubsub.Consumer{
-	// 	Msg: make(chan pubsub.Message),
-	// }
-	// // fmt.Println("CONSUMER", &consumer1)
-	// consumer2 := &pubsub.Consumer{
-	// 	Msg: make(chan pubsub.Message),
-	// }
-
-	// producer1 := pubsub.Producer{
-	// 	Broker: broker,
-	// }
-
-	// producer2 := pubsub.Producer{
-	// 	Broker: broker,
-	// }
-
-	// broker.Subscribe(consumer1)
-	// broker.Subscribe(consumer2)
-
-	// producer1.Publish(&pubsub.Message{
-	// 	Body: "1- TEST STRING",
-	// })
-
-	// producer2.Publish(&pubsub.Message{
-	// 	Body: "2- TEST STRING",
-	// })
-
-	// consumer1.Consume()
-	// consumer2.Consume()
-
 	dirwatcher := filesystemwatcher.NewDirWatcher("D:/GOLANG/Course/hw15/task1")
 	logger := filesystemwatcher.NewLogger(dirwatcher.Broker)
 	logger.NotifyOnModification()

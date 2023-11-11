@@ -7,6 +7,12 @@ import (
 	"qeueu/task1/pkg/pubsub"
 )
 
+type DirWatcher struct {
+	path   string
+	Broker *pubsub.Broker
+	files  []FileWatcher
+}
+
 type FileWatcher struct {
 	fileName string
 	lmt      int // last modified time
@@ -20,7 +26,6 @@ func (f *FileWatcher) Watch() {
 			lmt := stat.ModTime().Nanosecond()
 			if f.lmt != lmt {
 				f.lmt = lmt
-				fmt.Println("WATCH", f.fileName, f.lmt, lmt)
 				f.producer.Publish(&pubsub.Message{
 					Body: fmt.Sprintf("%v has been modified!", f.fileName),
 				})
@@ -29,25 +34,39 @@ func (f *FileWatcher) Watch() {
 	}()
 }
 
-type DirWatcher struct {
-	path   string
-	Broker *pubsub.Broker
-	files  []FileWatcher
-}
-
 func NewDirWatcher(path string) *DirWatcher {
-	var files []FileWatcher
+	d := new(DirWatcher)
 	broker := pubsub.NewBroker()
 
+	d.walkThroughDirs(path, broker)
+
+	for i := range d.files {
+		d.files[i].Watch()
+	}
+
+	broker.Accept()
+
+	return &DirWatcher{
+		path:   path,
+		Broker: broker,
+		files:  d.files,
+	}
+}
+
+func (d *DirWatcher) walkThroughDirs(path string, broker *pubsub.Broker) {
+	var files []FileWatcher
 	entries, err := os.ReadDir(path)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for _, e := range entries {
+		if e.Type().IsDir() {
+			d.walkThroughDirs(path+"/"+e.Name(), broker)
+		}
 		if e.Type().IsRegular() {
 			fileName := path + "/" + e.Name()
-			fmt.Println(fileName, "ADDED")
+			fmt.Println(fileName, " is ADDED to tracking")
 			stat, _ := os.Stat(fileName)
 			files = append(files, FileWatcher{
 				fileName: fileName,
@@ -56,33 +75,5 @@ func NewDirWatcher(path string) *DirWatcher {
 			})
 		}
 	}
-
-	for i := range files {
-		files[i].Watch()
-	}
-
-	broker.Accept()
-
-	return &DirWatcher{
-		path:   path,
-		Broker: broker,
-		files:  files,
-	}
-}
-
-type Logger struct {
-	cons *pubsub.Consumer
-}
-
-func NewLogger(broker *pubsub.Broker) *Logger {
-	cons := pubsub.NewConsumer()
-	broker.Subscribe(cons)
-
-	return &Logger{
-		cons: cons,
-	}
-}
-
-func (l *Logger) NotifyOnModification() {
-	l.cons.Consume()
+	d.files = append(d.files, files...)
 }
