@@ -5,7 +5,7 @@ type Observer interface {
 }
 
 type Subject interface {
-	RegisterObserver(observer Observer)
-	RemoveObserver(observer Observer)
-	NotifyObservers(message string)
+	registerObserver(observer Observer)
+	removeObserver(observer Observer)
+	notifyObservers(message string)
 }

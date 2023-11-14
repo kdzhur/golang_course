@@ -4,19 +4,25 @@
 
 package main
 
-import "qeueu/task2/internal/game"
+import (
+	"qeueu/task2/internal/game"
+)
 
 func main() {
-	room := game.NewGameRoom("Game room")
 
 	player1 := game.NewPlayer("John")
 	player2 := game.NewPlayer("Doe")
+	players := []*game.Player{player1, player2}
 
-	room.RegisterObserver(player1)
-	room.RegisterObserver(player2)
+	room := game.NewGameRoom("Game room", players)
 
-	room.NotifyObservers("Player Bob made a move.")
+	player1.TakeAnAction(room, "MOVING FORWARD")
+	player2.TakeAnAction(room, "MOVING BACKWARD")
 
-	room.RemoveObserver(player1)
-	room.NotifyObservers("Player Alice made a move.")
+	player2.LeaveRoom(room)
+
+	player1.TakeAnAction(room, "saying: \"I won't play alone!\"")
+	player1.LeaveRoom(room)
+
+	player1.TakeAnAction(room, "MOVING FORWARD") // no action
 }
