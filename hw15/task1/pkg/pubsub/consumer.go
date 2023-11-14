@@ -1,8 +1,11 @@
 package pubsub
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Consumer struct {
+	ID  int
 	Msg chan Message
 }
 
