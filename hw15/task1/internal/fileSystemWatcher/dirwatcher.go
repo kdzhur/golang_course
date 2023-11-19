@@ -8,6 +8,8 @@ import (
 	"qeueu/task1/pkg/pubsub"
 )
 
+var dirID uint = 2
+
 type DirWatcher struct {
 	path   string
 	Broker *pubsub.Broker
@@ -85,8 +87,12 @@ func (d *DirWatcher) walkThroughDirs(path string, broker *pubsub.Broker, state *
 
 func (d *DirWatcher) AddDirToWatch(state *watcherstate.GORMState) {
 	// Save to DB
-	state.SaveDir(watcherstate.Dir{
+	stateDir := &watcherstate.Dir{
 		WatcherID: state.Watcher.ID,
 		Path:      d.path,
-	})
+	}
+
+	state.Redis.Set(stateDir.Path, dirID)
+	state.SaveDir(stateDir)
+	dirID++
 }

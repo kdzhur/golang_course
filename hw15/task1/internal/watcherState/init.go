@@ -44,6 +44,7 @@ type GORMState struct {
 	db      *gorm.DB
 	RootDir *Dir
 	Watcher *Watcher
+	Redis   *RedisState
 }
 
 func NewGormState() *GORMState {
@@ -59,9 +60,11 @@ func NewGormState() *GORMState {
 	}
 }
 func (g *GORMState) InitDatabase(rootPath string) {
-	g.Watcher = g.SaveWatcher(Watcher{})
-	g.RootDir = g.SaveDir(Dir{
+	g.Watcher = g.SaveWatcher(&Watcher{})
+	g.RootDir = g.SaveDir(&Dir{
 		WatcherID: g.Watcher.ID,
 		Path:      rootPath,
 	})
+	g.Redis = NewRedisState()
+	g.Redis.Set(rootPath, 1)
 }
