@@ -66,27 +66,27 @@ func (d *DirWatcher) walkThroughDirs(path string, broker *pubsub.Broker, state *
 		if e.Type().IsRegular() {
 			fileName := path + "/" + e.Name()
 			log.Println(fileName, "is ADDED to tracking")
-			stat, _ := os.Stat(fileName)
-			files = append(files, FileWatcher{
+			file := FileWatcher{
 				fileName: fileName,
-				lmt:      stat.ModTime().Nanosecond(),
 				producer: pubsub.Producer{Broker: broker},
-			})
-			currentDir := state.FindDir(path)
-			state.SaveFile(watcherstate.File{
-				FileName: e.Name(),
-				Path:     fileName,
-				DirID:    currentDir.ID,
-				LMT:      stat.ModTime(),
-			})
+			}
+			file.AddFileToWatch(d, state)
 		}
 		if e.Type().IsDir() {
-			state.SaveDir(watcherstate.Dir{
-				WatcherID: state.Watcher.ID,
-				Path:      path + "/" + e.Name(),
-			})
+			dir := DirWatcher{
+				path: path + "/" + e.Name(),
+			}
+			dir.AddDirToWatch(state)
 			d.walkThroughDirs(path+"/"+e.Name(), broker, state)
 		}
 	}
 	d.files = append(d.files, files...)
+}
+
+func (d *DirWatcher) AddDirToWatch(state *watcherstate.GORMState) {
+	// Save to DB
+	state.SaveDir(watcherstate.Dir{
+		WatcherID: state.Watcher.ID,
+		Path:      d.path,
+	})
 }
