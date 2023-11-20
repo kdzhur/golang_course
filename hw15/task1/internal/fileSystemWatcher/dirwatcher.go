@@ -1,11 +1,11 @@
 package filesystemwatcher
 
 import (
-	"fmt"
 	"log"
 	"os"
 	watcherstate "qeueu/task1/internal/watcherState"
 	"qeueu/task1/pkg/pubsub"
+	"time"
 )
 
 type DirWatcher struct {
@@ -14,28 +14,7 @@ type DirWatcher struct {
 	files  []FileWatcher
 }
 
-type FileWatcher struct {
-	fileName string
-	lmt      int // last modified time
-	producer pubsub.Producer
-}
-
-func (f *FileWatcher) Watch() {
-	go func() {
-		for {
-			stat, _ := os.Stat(f.fileName)
-			lmt := stat.ModTime().Nanosecond()
-			if f.lmt != lmt {
-				f.lmt = lmt
-				f.producer.Publish(&pubsub.Message{
-					Body: fmt.Sprintf("%v has been modified!", f.fileName),
-				})
-			}
-		}
-	}()
-}
-
-func NewDirWatcher(path string) *DirWatcher {
+func NewDirWatcher(path string, rateLimit time.Duration) *DirWatcher {
 	d := new(DirWatcher)
 	broker := pubsub.NewBroker()
 	state := watcherstate.NewGormState()
@@ -43,7 +22,7 @@ func NewDirWatcher(path string) *DirWatcher {
 	d.walkThroughDirs(path, broker, state)
 
 	for i := range d.files {
-		d.files[i].Watch()
+		d.files[i].Watch(rateLimit)
 	}
 
 	broker.Accept()
