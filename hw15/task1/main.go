@@ -7,11 +7,21 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 	filesystemwatcher "qeueu/task1/internal/fileSystemWatcher"
 )
 
+const RATE_LIMIT = 1
+
 func main() {
-	dirwatcher := filesystemwatcher.NewDirWatcher("D:/GOLANG/Course/hw15/task1")
+
+	workDir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	dirwatcher := filesystemwatcher.NewDirWatcher(workDir, RATE_LIMIT)
 	logger := filesystemwatcher.NewLogger(dirwatcher.Broker)
 	logger.NotifyOnModification()
 

@@ -1,10 +1,11 @@
 package filesystemwatcher
 
 import (
-	"fmt"
 	"log"
 	"os"
+	watcherstate "qeueu/task1/internal/watcherState"
 	"qeueu/task1/pkg/pubsub"
+	"time"
 )
 
 type DirWatcher struct {
@@ -13,35 +14,15 @@ type DirWatcher struct {
 	files  []FileWatcher
 }
 
-type FileWatcher struct {
-	fileName string
-	lmt      int // last modified time
-	producer pubsub.Producer
-}
-
-func (f *FileWatcher) Watch() {
-	go func() {
-		for {
-			stat, _ := os.Stat(f.fileName)
-			lmt := stat.ModTime().Nanosecond()
-			if f.lmt != lmt {
-				f.lmt = lmt
-				f.producer.Publish(&pubsub.Message{
-					Body: fmt.Sprintf("%v has been modified!", f.fileName),
-				})
-			}
-		}
-	}()
-}
-
-func NewDirWatcher(path string) *DirWatcher {
+func NewDirWatcher(path string, rateLimit time.Duration) *DirWatcher {
 	d := new(DirWatcher)
 	broker := pubsub.NewBroker()
-
-	d.walkThroughDirs(path, broker)
+	state := watcherstate.NewGormState()
+	state.InitDatabase(path)
+	d.walkThroughDirs(path, broker, state)
 
 	for i := range d.files {
-		d.files[i].Watch()
+		d.files[i].Watch(rateLimit)
 	}
 
 	broker.Accept()
@@ -53,7 +34,7 @@ func NewDirWatcher(path string) *DirWatcher {
 	}
 }
 
-func (d *DirWatcher) walkThroughDirs(path string, broker *pubsub.Broker) {
+func (d *DirWatcher) walkThroughDirs(path string, broker *pubsub.Broker, state *watcherstate.GORMState) {
 	var files []FileWatcher
 	entries, err := os.ReadDir(path)
 	if err != nil {
@@ -61,19 +42,30 @@ func (d *DirWatcher) walkThroughDirs(path string, broker *pubsub.Broker) {
 	}
 
 	for _, e := range entries {
-		if e.Type().IsDir() {
-			d.walkThroughDirs(path+"/"+e.Name(), broker)
-		}
 		if e.Type().IsRegular() {
 			fileName := path + "/" + e.Name()
-			fmt.Println(fileName, " is ADDED to tracking")
-			stat, _ := os.Stat(fileName)
-			files = append(files, FileWatcher{
+			log.Println(fileName, "is ADDED to tracking")
+			file := FileWatcher{
 				fileName: fileName,
-				lmt:      stat.ModTime().Nanosecond(),
 				producer: pubsub.Producer{Broker: broker},
-			})
+			}
+			file.AddFileToWatch(d, state)
+		}
+		if e.Type().IsDir() {
+			dir := DirWatcher{
+				path: path + "/" + e.Name(),
+			}
+			dir.AddDirToWatch(state)
+			d.walkThroughDirs(path+"/"+e.Name(), broker, state)
 		}
 	}
 	d.files = append(d.files, files...)
+}
+
+func (d *DirWatcher) AddDirToWatch(state *watcherstate.GORMState) {
+	// Save to DB
+	state.SaveDir(watcherstate.Dir{
+		WatcherID: state.Watcher.ID,
+		Path:      d.path,
+	})
 }
